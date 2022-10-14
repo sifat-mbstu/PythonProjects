@@ -17,9 +17,14 @@ from django.contrib import admin
 from django.urls import path
 
 from django.conf.urls import include
-from django.urls import re_path as url
-
+from django.urls import re_path as url,path
+"""
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url('',include('Employee.urls'))
+    path('',include('Employee.urls'))
+]
+"""
+urlpatterns = [
+    path('admin/', admin.site.urls, name=''),
+    path('',include('Employee.urls')),
 ]

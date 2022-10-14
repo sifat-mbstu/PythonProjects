@@ -10,6 +10,12 @@ urlpatterns = [
 from django.urls import include, path
 """
 urlpatterns = [
+    path('', views.departmentApi, name=''),
     path('department/', views.departmentApi, name=''),
     path('department/<id>/', views.departmentApi, name=''),
+    
+    path('employee/', views.employeeApi, name=''),
+    path('employee/<id>/', views.employeeApi, name=''),
+    
+    path('employee/savefile/', views.SaveFile),
 ]
