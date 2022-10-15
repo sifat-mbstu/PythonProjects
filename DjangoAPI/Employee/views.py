@@ -11,10 +11,16 @@ from django.core.files.storage import default_storage
 # Create your views here.
 
 @csrf_exempt
-def departmentApi(request,id=0):
+def departmentApi(request,id=None):
+    print(request.method, id)
     if request.method=='GET':
-        departments = Departments.objects.all()
-        departments_serializer=DepartmentSerializer(departments,many=True)
+        
+        if id:
+            department = Departments.objects.get(pk=id)
+            departments_serializer=DepartmentSerializer(department)
+        else: 
+            departments = Departments.objects.all()
+            departments_serializer=DepartmentSerializer(departments,many=True)
         return JsonResponse(departments_serializer.data,safe=False)
     elif request.method=='POST':
         department_data=JSONParser().parse(request)
@@ -32,8 +38,8 @@ def departmentApi(request,id=0):
             return JsonResponse("Updated Successfully",safe=False)
         return JsonResponse("Failed to Update")
     elif request.method=='DELETE':
-        print('Request: ', request)
-        department=Departments.objects.get(DepartmentId=id)
+        # print('Request: ', request)
+        department=Departments.objects.get(pk=id)
         department.delete()
         return JsonResponse("Deleted Successfully",safe=False)
 
